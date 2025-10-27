@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Mode - Defining Fashion Trends Worldwide</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #fafafa;
+    --bg-secondary: #f5f5f5;
+    --text-primary: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --accent: #c9a55a;
+    --accent-light: #e6d5a8;
+    --accent-dark: #8b7239;
+    --border: rgba(201, 165, 90, 0.3);
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 15px 40px rgba(201, 165, 90, 0.2);
+    --card-bg: #ffffff;
+    --overlay-light: rgba(255, 255, 255, 0.9);
+    --gradient-gold: linear-gradient(135deg, #c9a55a 0%, #e6d5a8 50%, #c9a55a 100%);
+    --gradient-bg: linear-gradient(180deg, #ffffff 0%, #f8f8f8 100%);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #0d0d0d;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a8a8a8;
+    --accent: #e6d5a8;
+    --accent-light: #f0e5c8;
+    --accent-dark: #c9a55a;
+    --border: rgba(230, 213, 168, 0.25);
+    --shadow-sm: 0 2px 10px rgba(230, 213, 168, 0.08);
+    --shadow-md: 0 5px 20px rgba(230, 213, 168, 0.12);
+    --shadow-lg: 0 10px 30px rgba(230, 213, 168, 0.15);
+    --shadow-hover: 0 15px 40px rgba(230, 213, 168, 0.25);
+    --card-bg: #1f1f1f;
+    --overlay-light: rgba(13, 13, 13, 0.9);
+    --gradient-gold: linear-gradient(135deg, #e6d5a8 0%, #f0e5c8 50%, #e6d5a8 100%);
+    --gradient-bg: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
+}
+
+body {
+    font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: all 0.3s ease;
+    line-height: 1.5;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(201, 165, 90, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(201, 165, 90, 0.04) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 3%;
+    background: rgba(250, 250, 250, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="dark"] nav {
+    background: rgba(13, 13, 13, 0.95);
+}
+
+nav.scrolled {
+    padding: 0.8rem 3%;
+    box-shadow: var(--shadow-md);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    font-family: 'Didot', 'Bodoni', serif;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gradient-gold);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover::after {
+    opacity: 1;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    font-family: 'Futura', 'Century Gothic', sans-serif;
+}
+
+.nav-links a:hover {
+    color: var(--accent);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gradient-gold);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.theme-toggle {
+    width: 50px;
+    height: 26px;
+    background: var(--gradient-gold);
+    border-radius: 50px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(201, 165, 90, 0.3);
+    border: 1px solid var(--accent);
+}
+
+.theme-toggle:hover {
+    box-shadow: 0 4px 15px rgba(201, 165, 90, 0.4);
+    transform: translateY(-1px);
+}
+
+.theme-toggle::after {
+    content: '☀';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .theme-toggle::after {
+    content: '☾';
+    left: 26px;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    background: rgba(201, 165, 90, 0.08);
+}
+
+.hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem 3%;
+    margin-top: 60px;
+    background: var(--gradient-bg);
+}
+
+.hero-decorative {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.floating-shape {
+    position: absolute;
+    border: 1px solid var(--border);
+    background: rgba(201, 165, 90, 0.02);
+    backdrop-filter: blur(4px);
+}
+
+.shape-1 {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    top: -80px;
+    right: -80px;
+    animation: float1 18s ease-in-out infinite;
+}
+
+.shape-2 {
+    width: 250px;
+    height: 250px;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    bottom: -60px;
+    left: -60px;
+    animation: float2 22s ease-in-out infinite;
+}
+
+.shape-3 {
+    width: 200px;
+    height: 200px;
+    border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+    top: 50%;
+    right: 8%;
+    animation: float3 28s ease-in-out infinite;
+}
+
+@keyframes float1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(20px, -40px) rotate(100deg); }
+    66% { transform: translate(-20px, -20px) rotate(200deg); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-30px, 30px) rotate(-100deg); }
+    66% { transform: translate(30px, -15px) rotate(-200deg); }
+}
+
+@keyframes float3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-40px, 40px) rotate(160deg); }
+}
+
+.hero-pattern-grid {
+    display: none; /* Removed for cleaner design */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 900px;
+    padding: 2rem;
+    background: var(--overlay-light);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    animation: fadeInScale 1s ease;
+}
+
+[data-theme="dark"] .hero-content {
+    background: var(--overlay-light);
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.hero-subtitle {
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-family: 'Futura', sans-serif;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Didot', 'Bodoni', serif;
+}
+
+.hero-divider {
+    width: 100px;
+    height: 2px;
+    background: var(--gradient-gold);
+    margin: 1.5rem auto;
+    border-radius: 2px;
+}
+
+.hero-description {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    font-weight: 400;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-primary, .cta-secondary {
+    padding: 0.9rem 2.5rem;
+    font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--accent);
+    border-radius: 40px;
+    transition: all 0.3s ease;
+    font-family: 'Futura', sans-serif;
+    font-weight: 600;
+}
+
+.cta-primary {
+    background: var(--gradient-gold);
+    color: #1a1a1a;
+    box-shadow: var(--shadow-sm);
+}
+
+.cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.cta-secondary {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.cta-secondary:hover {
+    background: var(--gradient-gold);
+    color: #1a1a1a;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    border-radius: 40px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    background: var(--overlay-light);
+    animation: bounce 2s ease-in-out infinite;
+}
+
+[data-theme="dark"] .scroll-indicator {
+    background: var(--overlay-light);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.scroll-indicator span {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.scroll-indicator::after {
+    content: '↓';
+    font-size: 1.2rem;
+    color: var(--accent);
+}
+
+/* Fashion Showcase Section */
+.fashion-showcase {
+    padding: clamp(4rem, 8vw, 6rem) 3%;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.showcase-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.showcase-header h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.showcase-header p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.fashion-slider-container {
+    position: relative;
+    height: 450px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.fashion-slider {
+    display: flex;
+    height: 100%;
+    animation: slideLeftFashion 30s linear infinite;
+    will-change: transform;
+}
+
+@keyframes slideLeftFashion {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.fashion-slider:hover {
+    animation-play-state: paused;
+}
+
+.fashion-card {
+    min-width: 350px;
+    height: 100%;
+    margin: 0 15px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s ease;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+}
+
+.fashion-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+}
+
+.fashion-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.fashion-card:hover img {
+    transform: scale(1.05);
+}
+
+.fashion-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+}
+
+.fashion-card:hover .fashion-overlay {
+    transform: translateY(0);
+}
+
+.fashion-overlay h3 {
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+}
+
+.fashion-overlay p {
+    font-size: 0.9rem;
+    color: var(--accent-light);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* Vision Section */
+.vision-section {
+    padding: clamp(5rem, 10vw, 7rem) 3%;
+    background: var(--gradient-bg);
+    border-bottom: 1px solid var(--border);
+}
+
+.vision-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.vision-content {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+}
+
+.vision-content h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.vision-content p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
+.vision-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 0;
+    background: var(--gradient-gold);
+    transition: height 0.4s ease;
+}
+
+.stat-card:hover::before {
+    height: 100%;
+}
+
+.stat-number {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 400;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+    font-family: 'Didot', serif;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.vision-image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    height: 500px;
+}
+
+.vision-img {
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+}
+
+.vision-img:first-child {
+    grid-row: 1 / 3;
+}
+
+.vision-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.vision-img:hover {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+}
+
+.vision-img:hover img {
+    transform: scale(1.05);
+}
+
+/* Goals Section */
+.goals-section {
+    padding: clamp(5rem, 10vw, 7rem) 3%;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.goals-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.goals-header h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.goals-header p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.goal-card {
+    padding: 2.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s ease;
+}
+
+.goal-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+}
+
+.goal-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.4s ease;
+}
+
+.goal-card:hover .goal-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.goal-card h3 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+}
+
+.goal-card p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+/* Team Section */
+.team-section {
+    padding: clamp(5rem, 10vw, 7rem) 3%;
+    background: var(--gradient-bg);
+}
+
+.team-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.team-header h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.team-header p {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.team-member {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent);
+}
+
+.member-image {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.team-member:hover .member-image img {
+    transform: scale(1.05);
+}
+
+.member-info {
+    padding: 2rem;
+}
+
+.member-info h3 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+}
+
+.member-role {
+    font-size: 0.9rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+}
+
+.member-bio {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+/* Footer */
+footer {
+    background: var(--accent);
+    color: #ffffff;
+    padding: 4rem 3% 2rem;
+    border-top: 2px solid var(--accent-dark);
+}
+
+[data-theme="dark"] footer {
+    background: #0d0d0d;
+    border-top: 2px solid var(--border);
+}
+
+.footer-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-section h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer-section h4 {
+    color: var(--accent-light);
+}
+
+.footer-section p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.95;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer-section p {
+    color: var(--text-secondary);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    letter-spacing: 0.08em;
+}
+
+[data-theme="dark"] .footer-links a {
+    color: var(--text-primary);
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    transform: translateX(5px);
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer-links a:hover {
+    color: var(--accent-light);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ffffff;
+    border-radius: 12px;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+[data-theme="dark"] .social-links a {
+    border-color: var(--border);
+}
+
+.social-links a:hover {
+    background: #ffffff;
+    color: var(--accent);
+    transform: translateY(-5px);
+}
+
+[data-theme="dark"] .social-links a:hover {
+    background: var(--accent-light);
+    color: var(--bg-primary);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 0.9rem;
+    opacity: 0.9;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top-color: var(--border);
+    color: var(--text-secondary);
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .vision-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .vision-image-grid {
+        height: 400px;
+    }
+
+    .fashion-card {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 968px) {
+    .nav-right {
+        gap: 1rem;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 80%;
+        max-width: 400px;
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 6rem 2rem 2rem;
+        gap: 2rem;
+        transition: right 0.4s ease;
+        border-left: 1px solid var(--border);
+        box-shadow: var(--shadow-md);
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.1rem;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .hamburger {
+        display: flex;
+        z-index: 1001;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .fashion-card {
+        min-width: 280px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .vision-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-content {
+        padding: 1.5rem;
+        border-radius: 15px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    .vision-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .fashion-slider-container {
+        height: 350px;
+    }
+
+    .fashion-card {
+        min-width: 250px;
+    }
+
+    .vision-image-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 1rem;
+    }
+
+    .vision-img:first-child {
+        grid-row: auto;
+        height: 300px;
+    }
+
+    .vision-img {
+        height: 250px;
+    }
+
+    .vision-content {
+        padding: 1.5rem;
+    }
+
+    .stat-card {
+        padding: 1.2rem;
+    }
+
+    .goal-card {
+        padding: 2rem;
+    }
+
+    .goals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-member {
+        padding: 1.5rem;
+    }
+
+    .member-image {
+        height: 300px;
+    }
+}
+
+/* Scroll Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.7s ease;
+}
+
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.7s ease;
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gradient-gold);
+    border-radius: 4px;
+    border: 1px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Aura Mode</div>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#vision">Vision</a></li>
+                    <li><a href="#goals">Goals</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="theme-toggle"></div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-decorative">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+            <div class="hero-pattern-grid">
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+                <div class="pattern-item"></div>
+            </div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-subtitle">Defining Global Fashion</p>
+            <h1 class="hero-title">AURA MODE</h1>
+            <div class="hero-divider"></div>
+            <p class="hero-description">Where style meets intelligence. Curating the world's most influential fashion trends through cutting-edge AI and global cultural insights.</p>
+            <div class="hero-cta">
+                <a href="#vision" class="cta-primary">Explore Trends</a>
+                <a href="#contact" class="cta-secondary">Get Started</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Discover</span>
+        </div>
+    </section>
+
+    <!-- Fashion Showcase Section -->
+    <section class="fashion-showcase">
+        <div class="showcase-header fade-in">
+            <h2>Latest Trends</h2>
+            <p>Discover the fashion movements shaping tomorrow, curated from 195+ countries and analyzed through our proprietary AI technology.</p>
+        </div>
+        <div class="fashion-slider-container">
+            <div class="fashion-slider">
+                <!-- First set -->
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=1000&fit=crop" alt="Summer Elegance">
+                    <div class="fashion-overlay">
+                        <h3>Summer Elegance</h3>
+                        <p>Resort 2025</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=1000&fit=crop" alt="Urban Chic">
+                    <div class="fashion-overlay">
+                        <h3>Urban Chic</h3>
+                        <p>Street Style</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop" alt="Minimalist Luxury">
+                    <div class="fashion-overlay">
+                        <h3>Minimalist Luxury</h3>
+                        <p>Modern Classic</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&h=1000&fit=crop" alt="Timeless Grace">
+                    <div class="fashion-overlay">
+                        <h3>Timeless Grace</h3>
+                        <p>Heritage</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&h=1000&fit=crop" alt="Bold Statement">
+                    <div class="fashion-overlay">
+                        <h3>Bold Statement</h3>
+                        <p>Avant-Garde</p>
+                    </div>
+                </div>
+                <!-- Duplicate set for seamless loop -->
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&h=1000&fit=crop" alt="Summer Elegance">
+                    <div class="fashion-overlay">
+                        <h3>Summer Elegance</h3>
+                        <p>Resort 2025</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=1000&fit=crop" alt="Urban Chic">
+                    <div class="fashion-overlay">
+                        <h3>Urban Chic</h3>
+                        <p>Street Style</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&h=1000&fit=crop" alt="Minimalist Luxury">
+                    <div class="fashion-overlay">
+                        <h3>Minimalist Luxury</h3>
+                        <p>Modern Classic</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&h=1000&fit=crop" alt="Timeless Grace">
+                    <div class="fashion-overlay">
+                        <h3>Timeless Grace</h3>
+                        <p>Heritage</p>
+                    </div>
+                </div>
+                <div class="fashion-card">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=800&h=1000&fit=crop" alt="Bold Statement">
+                    <div class="fashion-overlay">
+                        <h3>Bold Statement</h3>
+                        <p>Avant-Garde</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="vision-section">
+        <div class="vision-container">
+            <div class="vision-content slide-in-left">
+                <h2>Our Vision</h2>
+                <p>At Aura Mode, we envision a world where fashion transcends boundaries, cultures merge seamlessly, and personal style becomes a universal language of self-expression.</p>
+                <p>We're not just tracking trends—we're defining them. Through cutting-edge AI analysis and global street-style monitoring, we identify emerging fashion movements before they hit the mainstream.</p>
+                <p>Our mission is to democratize high fashion, making trend forecasting accessible to designers, boutiques, and fashion enthusiasts worldwide.</p>
+                <div class="vision-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">195+</div>
+                        <div class="stat-label">Countries Covered</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Daily Updates</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Trend Accuracy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Monitoring</div>
+                    </div>
+                </div>
+            </div>
+            <div class="vision-image-grid slide-in-right">
+                <div class="vision-img">
+                    <img src="https://images.unsplash.com/photo-1558769132-cb1aea1f9413?w=600&h=1000&fit=crop" alt="Fashion Vision">
+                </div>
+                <div class="vision-img">
+                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=500&fit=crop" alt="Style Analysis">
+                </div>
+                <div class="vision-img">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&h=500&fit=crop" alt="Trend Forecasting">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Goals Section -->
+    <section id="goals" class="goals-section">
+        <div class="goals-header fade-in">
+            <h2>Our Goals</h2>
+            <p>Transforming the fashion industry through innovation, inclusivity, and intelligence</p>
+        </div>
+        <div class="goals-grid">
+            <div class="goal-card fade-in">
+                <div class="goal-icon">🌍</div>
+                <h3>Global Reach</h3>
+                <p>Expand trend coverage to every fashion capital and emerging market, capturing diverse cultural influences that shape tomorrow's fashion landscape.</p>
+            </div>
+            <div class="goal-card fade-in">
+                <div class="goal-icon">🤖</div>
+                <h3>AI Innovation</h3>
+                <p>Develop proprietary AI algorithms that predict fashion trends with unprecedented accuracy, giving brands a competitive edge in fast-paced markets.</p>
+            </div>
+            <div class="goal-card fade-in">
+                <div class="goal-icon">👥</div>
+                <h3>Community First</h3>
+                <p>Build a vibrant community of designers, stylists, and fashion lovers who collaborate, share insights, and shape the future of style together.</p>
+            </div>
+            <div class="goal-card fade-in">
+                <div class="goal-icon">♻️</div>
+                <h3>Sustainability</h3>
+                <p>Champion sustainable fashion by highlighting eco-conscious trends and promoting brands that prioritize ethical production and environmental responsibility.</p>
+            </div>
+            <div class="goal-card fade-in">
+                <div class="goal-icon">📊</div>
+                <h3>Data Excellence</h3>
+                <p>Provide actionable insights through comprehensive analytics, helping businesses make informed decisions based on real-time fashion data.</p>
+            </div>
+            <div class="goal-card fade-in">
+                <div class="goal-icon">✨</div>
+                <h3>Trend Democracy</h3>
+                <p>Make trend forecasting accessible to independent designers and small businesses, leveling the playing field in the fashion industry.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="team-header fade-in">
+            <h2>Meet the Visionaries</h2>
+            <p>The creative minds behind Aura Mode</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-member fade-in">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop" alt="Sophia Chen">
+                </div>
+                <div class="member-info">
+                    <h3>Sophia Chen</h3>
+                    <p class="member-role">Founder & Creative Director</p>
+                    <p class="member-bio">Former Vogue editor with 15+ years experience in fashion journalism and trend forecasting across global markets.</p>
+                </div>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" alt="Marcus Johnson">
+                </div>
+                <div class="member-info">
+                    <h3>Marcus Johnson</h3>
+                    <p class="member-role">Chief Technology Officer</p>
+                    <p class="member-bio">AI specialist and former Google engineer, pioneering machine learning applications in fashion trend analysis.</p>
+                </div>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=800&fit=crop" alt="Isabella Rodriguez">
+                </div>
+                <div class="member-info">
+                    <h3>Isabella Rodriguez</h3>
+                    <p class="member-role">Head of Trend Analysis</p>
+                    <p class="member-bio">Fashion forecaster with expertise in street style, runway trends, and cultural fashion movements worldwide.</p>
+                </div>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&h=800&fit=crop" alt="David Kim">
+                </div>
+                <div class="member-info">
+                    <h3>David Kim</h3>
+                    <p class="member-role">Head of Partnerships</p>
+                    <p class="member-bio">Former luxury brand executive with deep connections across fashion houses, retailers, and design studios.</p>
+                </div>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=800&fit=crop" alt="Amara Okafor">
+                </div>
+                <div class="member-info">
+                    <h3>Amara Okafor</h3>
+                    <p class="member-role">Sustainability Director</p>
+                    <p class="member-bio">Eco-fashion advocate championing sustainable practices and ethical fashion trends in the industry.</p>
+                </div>
+            </div>
+            <div class="team-member fade-in">
+                <div class="member-image">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&fit=crop" alt="Lucas Martinez">
+                </div>
+                <div class="member-info">
+                    <h3>Lucas Martinez</h3>
+                    <p class="member-role">Head of Design</p>
+                    <p class="member-bio">Award-winning UX designer creating intuitive platforms that make trend discovery seamless and inspiring.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Aura Mode</h4>
+                <p>Defining fashion trends worldwide through innovation, intelligence, and inclusivity.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="LinkedIn">💼</a>
+                    <a href="#" aria-label="Pinterest">📌</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="#vision">About Us</a></li>
+                    <li><a href="#goals">Our Mission</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Trend Reports</a></li>
+                    <li><a href="#">AI Analysis</a></li>
+                    <li><a href="#">Consulting</a></li>
+                    <li><a href="#">API Access</a></li>
+                    <li><a href="#">Enterprise</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Trend Guide</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Aura Mode. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('auramode-theme', newTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('auramode-theme') || 'light';
+        body.setAttribute('data-theme', savedTheme);
+
+        // Hamburger Menu
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar Scroll Effect
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter Animation for Stats
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                    entry.target.classList.add('animated');
+                    const statCards = entry.target.querySelectorAll('.stat-card');
+                    statCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            const number = card.querySelector('.stat-number');
+                            const text = number.textContent;
+                            
+                            if (text === '24/7') return;
+                            
+                            let target = parseInt(text);
+                            let current = 0;
+                            const increment = target / 60;
+                            const suffix = text.includes('+') ? '+' : text.includes('%') ? '%' : '';
+                            
+                            const updateCounter = () => {
+                                current += increment;
+                                if (current < target) {
+                                    number.textContent = Math.floor(current) + suffix;
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    number.textContent = text;
+                                }
+                            };
+                            updateCounter();
+                        }, index * 180);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsContainer = document.querySelector('.vision-stats');
+        if (statsContainer) {
+            statsObserver.observe(statsContainer);
+        }
+
+        // Parallax Hero Content
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            
+            if (scrolled < window.innerHeight && heroContent) {
+                heroContent.style.transform = `scale(${1 - scrolled * 0.0001}) translateY(${scrolled * 0.2}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 1;
+            }
+            
+            if (scrollIndicator) {
+                scrollIndicator.style.opacity = 1 - (scrolled / 400);
+            }
+        });
+
+        // Floating shapes animation enhancement
+        const shapes = document.querySelectorAll('.floating-shape');
+        shapes.forEach((shape, index) => {
+            shape.style.animationDelay = `${index * 0.5}s`;
+        });
+
+        // Pattern grid hover effect
+        const patternItems = document.querySelectorAll('.pattern-item');
+        patternItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.02}s`;
+            
+            item.addEventListener('mouseenter', () => {
+                // Add ripple effect to neighboring items
+                const neighbors = [
+                    patternItems[index - 1],
+                    patternItems[index + 1],
+                    patternItems[index - 8],
+                    patternItems[index + 8]
+                ];
+                
+                neighbors.forEach(neighbor => {
+                    if (neighbor) {
+                        neighbor.style.background = 'rgba(201, 165, 90, 0.05)';
+                        setTimeout(() => {
+                            neighbor.style.background = '';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Add smooth reveal animation on page load
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                document.body.style.transition = 'opacity 0.8s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Enhanced scroll animations for cards
+        const cards = document.querySelectorAll('.goal-card, .team-member');
+        cards.forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.1}s`;
+        });
+
+        // Add active state to navigation based on scroll position
+        const sections = document.querySelectorAll('section[id]');
+        const navItems = document.querySelectorAll('.nav-links a[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Fashion card interactive shadow
+        const fashionCards = document.querySelectorAll('.fashion-card');
+        fashionCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-15px) scale(1.03)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+        // Add entrance animation to hero content
+        const heroElements = [
+            document.querySelector('.hero-subtitle'),
+            document.querySelector('.hero-title'),
+            document.querySelector('.hero-divider'),
+            document.querySelector('.hero-description'),
+            document.querySelector('.hero-cta')
+        ];
+
+        heroElements.forEach((el, index) => {
+            if (el) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    el.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 300 + (index * 150));
+            }
+        });
+
+        // CTA Button ripple effect
+        const ctaButtons = document.querySelectorAll('.cta-primary, .cta-secondary');
+        ctaButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple-effect');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple effect dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple-effect {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .nav-links a.active {
+                color: var(--accent);
+                font-weight: 700;
+            }
+            
+            .nav-links a.active::after {
+                width: 100%;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
